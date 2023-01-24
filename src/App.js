@@ -3,8 +3,18 @@ import BookCreate from './components/BookCreate';
 import BookList from "./components/BookList";
 
 function App () {
-
     const [books, setBooks] = useState([]);
+
+    const editBookById = (id, newTitle) => {
+        
+        const updatedBooks = books.map((book) => {
+            if(book.id === id){
+                return {...book, title: newTitle}; 
+            }
+            return book;
+        });
+        setBooks(updatedBooks);
+    }
 
     const deleteBookById = (id) => {
         // gives brand new array
@@ -25,9 +35,11 @@ function App () {
         setBooks(updatedBooks);
     };
 
+
+
     return (
         <div className="app">
-            <BookList ondDelete={deleteBookById} books={books} />
+            <BookList onEdit={editBookById} onDelete={deleteBookById} books={books} />
             <BookCreate onCreate={createBook} />
         </div>
     );
