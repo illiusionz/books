@@ -1,9 +1,18 @@
 import { useState } from "react";
 import BookCreate from './components/BookCreate';
+import BookList from "./components/BookList";
 
 function App () {
 
     const [books, setBooks] = useState([]);
+
+    const deleteBookById = (id) => {
+        // gives brand new array
+        const updatedBooks = books.filter((book) => {
+           return book.id !== id;
+        });
+        setBooks(updatedBooks);
+    }
 
     const createBook = (title) => {
         const updatedBooks = [
@@ -17,8 +26,8 @@ function App () {
     };
 
     return (
-        <div>
-            {books.length}
+        <div className="app">
+            <BookList ondDelete={deleteBookById} books={books} />
             <BookCreate onCreate={createBook} />
         </div>
     );
